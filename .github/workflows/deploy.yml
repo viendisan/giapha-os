@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: "20"
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install --no-package-lock
       - name: Build with Next.js
         run: npx next build
       - name: Upload artifact
