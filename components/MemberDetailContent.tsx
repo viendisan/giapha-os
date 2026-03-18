@@ -92,12 +92,13 @@ export default function MemberDetailContent({
     show: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 300, damping: 24 },
+      transition: { type: "spring", stiffness: 200, damping: 20 },
     },
   };
 
   return (
     <motion.div
+      layout
       variants={containerVariants}
       initial="hidden"
       animate="show"
@@ -379,6 +380,7 @@ export default function MemberDetailContent({
                   relStats.paternalGrandchildren > 0 ||
                   relStats.maternalGrandchildren > 0) && (
                   <motion.div
+                    layout
                     variants={itemVariants}
                     className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-stone-200/60 shadow-sm transition-all hover:shadow-md hover:border-amber-200/60 sm:col-span-2 md:col-span-3"
                   >
@@ -391,28 +393,32 @@ export default function MemberDetailContent({
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {/* Biological Children */}
                       {relStats.biologicalChildren > 0 && (
-                        <div className="bg-stone-50/50 rounded-xl p-3 border border-stone-100 flex items-center gap-3">
-                          <div className="p-2 bg-blue-100/50 text-blue-600 rounded-lg">
-                            <Users className="size-5" />
-                          </div>
-                          <div>
-                            <p className="text-xl font-black text-stone-700 leading-none">
-                              {relStats.biologicalChildren}
-                            </p>
-                            <div className="space-y-1.5 w-full text-sm">
-                              {relStats.maleBiologicalChildren > 0 && (
-                                <span className="font-medium text-sky-700 bg-sky-100/50 px-1.5 py-0.5 rounded flex items-center gap-1">
-                                  <MaleIcon className="size-2.5" />{" "}
-                                  {relStats.maleBiologicalChildren} Trai
-                                </span>
-                              )}
-                              {relStats.femaleBiologicalChildren > 0 && (
-                                <span className="font-medium text-rose-700 bg-rose-100/50 px-1.5 py-0.5 rounded flex items-center gap-1">
-                                  <FemaleIcon className="size-2.5" />{" "}
-                                  {relStats.femaleBiologicalChildren} Gái
-                                </span>
-                              )}
+                        <div className="bg-stone-50/80 rounded-xl p-3 border border-stone-100 flex flex-col justify-between group hover:bg-stone-100/80 transition-colors">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="p-2 bg-blue-100/50 text-blue-600 rounded-lg group-hover:bg-blue-100 transition-colors">
+                              <Users className="size-4" />
                             </div>
+                            <div className="flex-1">
+                              <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest leading-tight">
+                                Con ruột
+                              </p>
+                              <p className="text-xl font-black text-stone-700 leading-none mt-0.5">
+                                {relStats.biologicalChildren}
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex flex-wrap gap-1.5 mt-auto pt-1 border-t border-stone-200/50">
+                            {relStats.maleBiologicalChildren > 0 && (
+                              <span className="text-[11px] font-medium text-sky-700 bg-sky-100/50 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                <MaleIcon className="size-3 shrink-0" /> {relStats.maleBiologicalChildren}
+                              </span>
+                            )}
+                            {relStats.femaleBiologicalChildren > 0 && (
+                              <span className="text-[11px] font-medium text-rose-700 bg-rose-100/50 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                <FemaleIcon className="size-3 shrink-0" /> {relStats.femaleBiologicalChildren}
+                              </span>
+                            )}
                           </div>
                         </div>
                       )}
@@ -420,33 +426,29 @@ export default function MemberDetailContent({
                       {/* In-Laws */}
                       {(relStats.sonInLaw > 0 ||
                         relStats.daughterInLaw > 0) && (
-                        <div className="bg-stone-50/50 rounded-xl p-3 border border-stone-100 flex items-center gap-3">
-                          <div className="p-2 bg-stone-200/50 text-stone-600 rounded-lg">
-                            <UserPlus className="size-5" />
-                          </div>
-                          <div className="w-full">
-                            <div className="space-y-1.5 w-full">
-                              {relStats.daughterInLaw > 0 && (
-                                <div className="flex items-center justify-between text-sm">
-                                  <span className="text-stone-600 font-medium">
-                                    Con dâu
-                                  </span>
-                                  <span className="font-bold text-stone-800">
-                                    {relStats.daughterInLaw}
-                                  </span>
-                                </div>
-                              )}
-                              {relStats.sonInLaw > 0 && (
-                                <div className="flex items-center justify-between text-sm">
-                                  <span className="text-stone-600 font-medium">
-                                    Con rể
-                                  </span>
-                                  <span className="font-bold text-stone-800">
-                                    {relStats.sonInLaw}
-                                  </span>
-                                </div>
-                              )}
+                        <div className="bg-stone-50/80 rounded-xl p-3 border border-stone-100 flex flex-col group hover:bg-stone-100/80 transition-colors">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="p-2 bg-stone-200/50 text-stone-600 rounded-lg group-hover:bg-stone-200 transition-colors">
+                              <UserPlus className="size-4" />
                             </div>
+                            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+                              Dâu / Rể
+                            </p>
+                          </div>
+                          
+                          <div className="space-y-1 mt-auto w-full pt-1 border-t border-stone-200/50">
+                            {relStats.daughterInLaw > 0 && (
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="text-stone-500 font-medium">Con dâu</span>
+                                <span className="font-bold text-stone-700">{relStats.daughterInLaw}</span>
+                              </div>
+                            )}
+                            {relStats.sonInLaw > 0 && (
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="text-stone-500 font-medium">Con rể</span>
+                                <span className="font-bold text-stone-700">{relStats.sonInLaw}</span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
@@ -454,33 +456,29 @@ export default function MemberDetailContent({
                       {/* Grandchildren */}
                       {(relStats.paternalGrandchildren > 0 ||
                         relStats.maternalGrandchildren > 0) && (
-                        <div className="bg-stone-50/50 rounded-xl p-3 border border-stone-100 flex items-center gap-3">
-                          <div className="p-2 bg-emerald-100/50 text-emerald-600 rounded-lg">
-                            <Baby className="size-5" />
-                          </div>
-                          <div className="w-full">
-                            <div className="space-y-1.5 w-full">
-                              {relStats.paternalGrandchildren > 0 && (
-                                <div className="flex items-center justify-between text-sm">
-                                  <span className="text-stone-600 font-medium">
-                                    Cháu nội
-                                  </span>
-                                  <span className="font-bold text-stone-800">
-                                    {relStats.paternalGrandchildren}
-                                  </span>
-                                </div>
-                              )}
-                              {relStats.maternalGrandchildren > 0 && (
-                                <div className="flex items-center justify-between text-sm">
-                                  <span className="text-stone-600 font-medium">
-                                    Cháu ngoại
-                                  </span>
-                                  <span className="font-bold text-stone-800">
-                                    {relStats.maternalGrandchildren}
-                                  </span>
-                                </div>
-                              )}
+                        <div className="bg-stone-50/80 rounded-xl p-3 border border-stone-100 flex flex-col group hover:bg-stone-100/80 transition-colors">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="p-2 bg-emerald-100/50 text-emerald-600 rounded-lg group-hover:bg-emerald-100 transition-colors">
+                              <Baby className="size-4" />
                             </div>
+                            <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+                              Cháu
+                            </p>
+                          </div>
+                          
+                          <div className="space-y-1 mt-auto w-full pt-1 border-t border-stone-200/50">
+                            {relStats.paternalGrandchildren > 0 && (
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="text-stone-500 font-medium">Cháu nội</span>
+                                <span className="font-bold text-stone-700">{relStats.paternalGrandchildren}</span>
+                              </div>
+                            )}
+                            {relStats.maternalGrandchildren > 0 && (
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="text-stone-500 font-medium">Cháu ngoại</span>
+                                <span className="font-bold text-stone-700">{relStats.maternalGrandchildren}</span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
@@ -494,7 +492,7 @@ export default function MemberDetailContent({
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Main Info */}
           <div className="lg:col-span-2 space-y-8">
-            <motion.section variants={itemVariants}>
+            <motion.section layout variants={itemVariants}>
               <h2 className="text-base sm:text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
                 <Info className="size-5 text-amber-600" />
                 Ghi chú
@@ -550,7 +548,7 @@ export default function MemberDetailContent({
               </div>
             </motion.section>
 
-            <motion.section variants={itemVariants}>
+            <motion.section layout variants={itemVariants}>
               <h2 className="text-base sm:text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
                 <Users className="size-5 text-amber-600" />
                 Gia đình
@@ -569,7 +567,7 @@ export default function MemberDetailContent({
 
           {/* Sidebar / Private Info */}
           <div className="space-y-6">
-            <motion.div variants={itemVariants}>
+            <motion.div layout variants={itemVariants}>
               {isAdmin ? (
                 <div className="bg-stone-50 p-5 sm:p-6 rounded-2xl border border-stone-200/80 shadow-sm">
                   <h3 className="font-bold text-stone-900 mb-4 flex items-center gap-2 text-sm sm:text-base border-b border-stone-200/60 pb-3">
